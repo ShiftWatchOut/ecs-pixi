@@ -1,0 +1,17 @@
+{
+  "name": "ecs-pixi",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^4.3.2",
+    "vite": "^2.4.4"
+  },
+  "dependencies": {
+    "ecsy": "^0.4.2",
+    "pixi.js": "^6.1.2"
+  }
+}
