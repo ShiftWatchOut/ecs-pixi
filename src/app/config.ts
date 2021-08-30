@@ -1,6 +1,9 @@
+const MaxX = 720;
+const MaxY = 480;
+
 const GLOBALS = {
-  width: 720,
-  height: 480,
+  width: MaxX,
+  height: MaxY,
   DEBUG: false,
   interactWith: {
     w: "w",
@@ -8,6 +11,7 @@ const GLOBALS = {
     arrowdown: "arrowdown",
     arrowup: "arrowup",
   },
+  boardVelocity: 1,
 };
 
 export default GLOBALS;
