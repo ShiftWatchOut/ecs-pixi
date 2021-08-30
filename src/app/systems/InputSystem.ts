@@ -10,7 +10,7 @@ class InputSystem extends System {
   keys: string[] = [];
   init() {
     window.addEventListener("keydown", (e) => {
-      if (this.keys.includes(e.key)) {
+      if (this.keys.includes(e.key.toLowerCase())) {
         return;
       } else {
         this.keys.push(e.key.toLowerCase());
