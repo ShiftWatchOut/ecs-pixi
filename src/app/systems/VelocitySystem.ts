@@ -16,11 +16,11 @@ class VelocitySystem extends System {
       const inputC = entity.getComponent(InputComponent);
       const VelocityC = entity.getMutableComponent(VelocityComponent);
       if ([interactWith.w, interactWith.arrowup].includes(inputC?.key)) {
-        VelocityC!.y += boardVelocity;
+        VelocityC!.y = -boardVelocity;
       } else if (
         [interactWith.s, interactWith.arrowdown].includes(inputC?.key)
       ) {
-        VelocityC!.y -= boardVelocity;
+        VelocityC!.y = +boardVelocity;
       } else {
         VelocityC!.y = 0;
       }

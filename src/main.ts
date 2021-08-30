@@ -8,6 +8,9 @@ import GLOBALS from "./app/config";
 import VelocitySystem from "./app/systems/VelocitySystem";
 import VelocityComponent from "./app/components/Velocity";
 import MoveSystem from "./app/systems/MoveSystem";
+import VolumeComponent from "./app/components/Volume";
+import SpriteComponent from "./app/components/Sprite";
+import pixiApp from "./app/singletons/pixi";
 
 const world = new World();
 
@@ -16,6 +19,8 @@ world
   .registerComponent(PositionComponent)
   .registerComponent(VelocityComponent)
   .registerComponent(InputComponent)
+  .registerComponent(VolumeComponent)
+  .registerComponent(SpriteComponent)
   .registerSystem(InputSystem)
   .registerSystem(VelocitySystem)
   .registerSystem(MoveSystem)
@@ -23,6 +28,8 @@ world
 
 const entity1 = world
   .createEntity()
+  .addComponent(PositionComponent, PositionComponent.create(10, 10))
+  .addComponent(VolumeComponent, VolumeComponent.create(20, 100))
   .addComponent(VelocityComponent)
   .addComponent(
     InputComponent,
@@ -31,15 +38,14 @@ const entity1 = world
 
 const entity2 = world
   .createEntity()
+  .addComponent(PositionComponent, PositionComponent.create(710, 10))
+  .addComponent(VolumeComponent, VolumeComponent.create(20, 100))
   .addComponent(VelocityComponent)
   .addComponent(
     InputComponent,
     InputComponent.create([interactWith.arrowdown, interactWith.arrowup])
   );
 
-function loop(delta?: number) {
+pixiApp.ticker.add((delta) => {
   world.execute(delta);
-  requestAnimationFrame(loop);
-}
-
-loop();
+});

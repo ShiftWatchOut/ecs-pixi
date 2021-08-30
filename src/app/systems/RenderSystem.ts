@@ -1,12 +1,48 @@
-import { System } from "ecsy";
-import pixiApp from "../singletons/pixi";
+import { Entity, System } from "ecsy";
+import PositionComponent from "../components/Position";
+import SpriteComponent from "../components/Sprite";
+import VolumeComponent from "../components/Volume";
+import pixiApp, { PIXI } from "../singletons/pixi";
 
 class RenderSystem extends System {
-  pixiApp: any;
+  pixiApp: PIXI.Application | undefined;
+  static queries = {
+    movings: {
+      components: [PositionComponent, VolumeComponent],
+      listen: {
+        added: true,
+        removed: true,
+      },
+    },
+  };
   init() {
     this.pixiApp = pixiApp;
   }
-  execute() {}
+  execute() {
+    this.queries.movings.added?.forEach((entity) => {
+      const g = new PIXI.Graphics();
+      g.name = `${entity.id}-volume`;
+      entity.addComponent(SpriteComponent, SpriteComponent.create(g));
+      this.updateVolumeGraph(g, entity);
+      this.pixiApp!.stage.addChild(g);
+    });
+    this.queries.movings.results.forEach((entity) => {
+      const Gref = entity.getComponent(SpriteComponent);
+      this.updateVolumeGraph(Gref?.ref, entity);
+    });
+  }
+
+  updateVolumeGraph(graphic: PIXI.Graphics | undefined, entity: Entity) {
+    if (graphic) {
+      const PosC = entity.getComponent(PositionComponent)!;
+      const VolC = entity.getComponent(VolumeComponent)!;
+      graphic
+        .clear()
+        .beginFill(0xffffff)
+        .drawRect(PosC.x, PosC.y, VolC.width, VolC.height)
+        .endFill();
+    }
+  }
 }
 
 export default RenderSystem;

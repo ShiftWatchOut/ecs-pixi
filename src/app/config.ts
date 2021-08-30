@@ -1,5 +1,5 @@
-const MaxX = 720;
-const MaxY = 480;
+const MaxX = 740;
+const MaxY = 520;
 
 const GLOBALS = {
   width: MaxX,
@@ -11,7 +11,7 @@ const GLOBALS = {
     arrowdown: "arrowdown",
     arrowup: "arrowup",
   },
-  boardVelocity: 1,
+  boardVelocity: 4,
 };
 
 export default GLOBALS;

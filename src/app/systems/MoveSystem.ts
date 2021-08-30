@@ -1,6 +1,7 @@
 import { System } from "ecsy";
 import PositionComponent from "../components/Position";
 import VelocityComponent from "../components/Velocity";
+import VolumeComponent from "../components/Volume";
 import GLOBALS from "../config";
 
 class MoveSystem extends System {
@@ -13,14 +14,18 @@ class MoveSystem extends System {
     this.queries.moving.results.forEach((entity) => {
       const PosC = entity.getMutableComponent(PositionComponent)!;
       const VelC = entity.getComponent(VelocityComponent)!;
+      const VoluC = entity.getComponent(VolumeComponent)!;
       PosC.x += VelC.x;
       PosC.y += VelC.y;
 
-      if (PosC.x > GLOBALS.width) {
-        PosC.x = GLOBALS.width;
+      const maxX = GLOBALS.width - VoluC.width;
+      const maxY = GLOBALS.height - VoluC.height;
+
+      if (PosC.x > maxX) {
+        PosC.x = maxX;
       }
-      if (PosC.y > GLOBALS.height) {
-        PosC.y = GLOBALS.height;
+      if (PosC.y > maxY) {
+        PosC.y = maxY;
       }
       if (PosC.x < 0) {
         PosC.x = 0;
