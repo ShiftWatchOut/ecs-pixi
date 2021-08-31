@@ -12,6 +12,7 @@ const GLOBALS = {
     arrowup: "arrowup",
   },
   boardVelocity: 4,
+  maxBallVelocity: 10
 };
 
 export default GLOBALS;

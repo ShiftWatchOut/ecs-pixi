@@ -11,6 +11,7 @@ import MoveSystem from "./app/systems/MoveSystem";
 import VolumeComponent from "./app/components/Volume";
 import SpriteComponent from "./app/components/Sprite";
 import pixiApp from "./app/singletons/pixi";
+import BounceComponent from "./app/components/Bouncing";
 
 const world = new World();
 
@@ -21,6 +22,7 @@ world
   .registerComponent(InputComponent)
   .registerComponent(VolumeComponent)
   .registerComponent(SpriteComponent)
+  .registerComponent(BounceComponent)
   .registerSystem(InputSystem)
   .registerSystem(VelocitySystem)
   .registerSystem(MoveSystem)
@@ -45,6 +47,13 @@ const entity2 = world
     InputComponent,
     InputComponent.create([interactWith.arrowdown, interactWith.arrowup])
   );
+
+const ball = world
+  .createEntity()
+  .addComponent(PositionComponent, PositionComponent.create(360, 240))
+  .addComponent(VolumeComponent, VolumeComponent.create(20, 20))
+  .addComponent(VelocityComponent, { x: 2, y: 1 })
+  .addComponent(BounceComponent)
 
 pixiApp.ticker.add((delta) => {
   world.execute(delta);

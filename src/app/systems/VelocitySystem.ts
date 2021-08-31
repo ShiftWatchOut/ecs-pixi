@@ -1,7 +1,11 @@
-import { System } from "ecsy";
+import { Not, System } from "ecsy";
+import BounceComponent from "../components/Bouncing";
 import InputComponent from "../components/Input";
+import PositionComponent from "../components/Position";
 import VelocityComponent from "../components/Velocity";
+import VolumeComponent from "../components/Volume";
 import GLOBALS from "../config";
+import { between, contains, getVertexes, IPoint, ISize } from "../util";
 
 const { interactWith, boardVelocity } = GLOBALS;
 
@@ -10,6 +14,12 @@ class VelocitySystem extends System {
     inputAndVelocity: {
       components: [InputComponent, VelocityComponent],
     },
+    bounce: {
+      components: [VelocityComponent, BounceComponent]
+    },
+    hitbox: {
+      components: [VolumeComponent, VelocityComponent, Not(BounceComponent)]
+    }
   };
   execute() {
     this.queries.inputAndVelocity.results.forEach((entity) => {
@@ -25,6 +35,54 @@ class VelocitySystem extends System {
         VelocityC!.y = 0;
       }
     });
+    const hitboxs: Array<{ info: IPoint & ISize, velocity: number }> = [];
+    this.queries.hitbox.results.forEach((entity) => {
+      const PosC = entity.getComponent(PositionComponent)!;
+      const VoluC = entity.getComponent(VolumeComponent)!;
+      const VeloC = entity.getComponent(VelocityComponent)!;
+      hitboxs.push({
+        info: {
+          x: PosC.x,
+          y: PosC.y,
+          w: VoluC.width,
+          h: VoluC.height,
+        },
+        velocity: VeloC.y,
+      })
+    })
+
+    this.queries.bounce.results.forEach((entity) => {
+      const PosC = entity.getComponent(PositionComponent)!;
+      const VelC = entity.getMutableComponent(VelocityComponent)!;
+      const VoluC = entity.getComponent(VolumeComponent)!;
+      const futureX = PosC.x + VelC.x;
+      const futureY = PosC.y + VelC.y;
+
+      const ballBound = getVertexes(futureX, futureY, VoluC.width, VoluC.height);
+      for (const box of hitboxs) {
+        const { info, velocity } = box
+        const anyInside = ballBound.some((bp) => contains(info.x, info.y, info.w, info.h, bp.x, bp.y))
+        if (anyInside) {
+          VelC.x = -VelC.x;
+          let futrueV = VelC.y + velocity;
+          if (Math.abs(futureX) > GLOBALS.maxBallVelocity) {
+            futrueV = Math.sign(futrueV) * GLOBALS.maxBallVelocity
+          }
+          VelC.y = futrueV
+          break;
+        }
+      }
+
+      const maxX = GLOBALS.width - VoluC.width;
+      const maxY = GLOBALS.height - VoluC.height;
+      if (!between(0, maxX, futureX)) {
+        VelC.x = -VelC.x;
+      }
+      if (!between(0, maxY, futureY)) {
+        VelC.y = -VelC.y;
+      }
+    })
+
   }
 }
 
