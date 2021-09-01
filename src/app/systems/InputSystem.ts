@@ -30,7 +30,6 @@ class InputSystem extends System {
       const findKey = this.keys.find((key) => input.subscribe.includes(key));
       if (findKey) {
         input.key = findKey;
-        console.log("keydown", findKey);
       }
     });
   }

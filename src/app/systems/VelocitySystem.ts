@@ -35,11 +35,10 @@ class VelocitySystem extends System {
         VelocityC!.y = 0;
       }
     });
-    const hitboxs: Array<{ info: IPoint & ISize, velocity: number }> = [];
+    const hitboxs: Array<{ info: IPoint & ISize }> = [];
     this.queries.hitbox.results.forEach((entity) => {
       const PosC = entity.getComponent(PositionComponent)!;
       const VoluC = entity.getComponent(VolumeComponent)!;
-      const VeloC = entity.getComponent(VelocityComponent)!;
       hitboxs.push({
         info: {
           x: PosC.x,
@@ -47,7 +46,6 @@ class VelocitySystem extends System {
           w: VoluC.width,
           h: VoluC.height,
         },
-        velocity: VeloC.y,
       })
     })
 
@@ -60,18 +58,21 @@ class VelocitySystem extends System {
       const futureY = PosC.y + VelC.y;
 
       const ballBound = getVertexes(futureX, futureY, VoluC.width, VoluC.height);
+      let anyInside
       for (const box of hitboxs) {
         const { info } = box
-        const anyInside = ballBound.some((bp) => contains(info.x, info.y, info.w, info.h, bp.x, bp.y))
+        anyInside = ballBound.some((bp) => contains(info.x, info.y, info.w, info.h, bp.x, bp.y))
         if (anyInside) {
-          if (!reversed) {
-            entity.addComponent(ReverseComponent);
-            VelC.x = -VelC.x;
-          }
           break;
-        } else {
-          entity.removeComponent(ReverseComponent);
         }
+      }
+      if (anyInside) {
+        if (!reversed) {
+          entity.addComponent(ReverseComponent);
+          VelC.x = -VelC.x;
+        }
+      } else {
+        entity.removeComponent(ReverseComponent);
       }
 
       const maxX = GLOBALS.width - VoluC.width;
