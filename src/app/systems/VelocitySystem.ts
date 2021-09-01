@@ -75,11 +75,7 @@ class VelocitySystem extends System {
         entity.removeComponent(ReverseComponent);
       }
 
-      const maxX = GLOBALS.width - VoluC.width;
       const maxY = GLOBALS.height - VoluC.height;
-      if (!between(0, maxX, futureX)) {
-        VelC.x = -VelC.x;
-      }
       if (!between(0, maxY, futureY)) {
         VelC.y = -VelC.y;
       }

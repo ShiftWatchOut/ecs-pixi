@@ -12,10 +12,12 @@ import VolumeComponent from "./app/components/Volume";
 import SpriteComponent from "./app/components/Sprite";
 import pixiApp from "./app/singletons/pixi";
 import BounceComponent from "./app/components/Bouncing";
+import ScoreSystem from "./app/systems/ScoreSystem";
 
 const world = new World();
 
-const { interactWith } = GLOBALS;
+const { interactWith, initBallPos, ety1Pos, ety2Pos } = GLOBALS;
+const startY = 10;
 world
   .registerComponent(PositionComponent)
   .registerComponent(VelocityComponent)
@@ -26,12 +28,13 @@ world
   .registerComponent(ReverseComponent)
   .registerSystem(InputSystem)
   .registerSystem(VelocitySystem)
+  .registerSystem(ScoreSystem)
   .registerSystem(MoveSystem)
   .registerSystem(RenderSystem);
 
 const entity1 = world
   .createEntity()
-  .addComponent(PositionComponent, PositionComponent.create(10, 10))
+  .addComponent(PositionComponent, PositionComponent.create(ety1Pos, startY))
   .addComponent(VolumeComponent, VolumeComponent.create(20, 100))
   .addComponent(VelocityComponent)
   .addComponent(
@@ -41,7 +44,7 @@ const entity1 = world
 
 const entity2 = world
   .createEntity()
-  .addComponent(PositionComponent, PositionComponent.create(710, 10))
+  .addComponent(PositionComponent, PositionComponent.create(ety2Pos, startY))
   .addComponent(VolumeComponent, VolumeComponent.create(20, 100))
   .addComponent(VelocityComponent)
   .addComponent(
@@ -51,7 +54,7 @@ const entity2 = world
 
 const ball = world
   .createEntity()
-  .addComponent(PositionComponent, PositionComponent.create(360, 240))
+  .addComponent(PositionComponent, PositionComponent.create(initBallPos.x, initBallPos.y))
   .addComponent(VolumeComponent, VolumeComponent.create(20, 20))
   .addComponent(VelocityComponent, { x: 2, y: 1 })
   .addComponent(BounceComponent)
