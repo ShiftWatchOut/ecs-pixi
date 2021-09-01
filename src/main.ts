@@ -6,7 +6,7 @@ import InputComponent from "./app/components/Input";
 import InputSystem from "./app/systems/InputSystem";
 import GLOBALS from "./app/config";
 import VelocitySystem from "./app/systems/VelocitySystem";
-import VelocityComponent from "./app/components/Velocity";
+import VelocityComponent, { ReverseComponent } from "./app/components/Velocity";
 import MoveSystem from "./app/systems/MoveSystem";
 import VolumeComponent from "./app/components/Volume";
 import SpriteComponent from "./app/components/Sprite";
@@ -23,6 +23,7 @@ world
   .registerComponent(VolumeComponent)
   .registerComponent(SpriteComponent)
   .registerComponent(BounceComponent)
+  .registerComponent(ReverseComponent)
   .registerSystem(InputSystem)
   .registerSystem(VelocitySystem)
   .registerSystem(MoveSystem)

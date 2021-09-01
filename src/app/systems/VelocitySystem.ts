@@ -2,7 +2,7 @@ import { Not, System } from "ecsy";
 import BounceComponent from "../components/Bouncing";
 import InputComponent from "../components/Input";
 import PositionComponent from "../components/Position";
-import VelocityComponent from "../components/Velocity";
+import VelocityComponent, { ReverseComponent } from "../components/Velocity";
 import VolumeComponent from "../components/Volume";
 import GLOBALS from "../config";
 import { between, contains, getVertexes, IPoint, ISize } from "../util";
@@ -55,21 +55,22 @@ class VelocitySystem extends System {
       const PosC = entity.getComponent(PositionComponent)!;
       const VelC = entity.getMutableComponent(VelocityComponent)!;
       const VoluC = entity.getComponent(VolumeComponent)!;
+      const reversed = entity.getComponent(ReverseComponent)
       const futureX = PosC.x + VelC.x;
       const futureY = PosC.y + VelC.y;
 
       const ballBound = getVertexes(futureX, futureY, VoluC.width, VoluC.height);
       for (const box of hitboxs) {
-        const { info, velocity } = box
+        const { info } = box
         const anyInside = ballBound.some((bp) => contains(info.x, info.y, info.w, info.h, bp.x, bp.y))
         if (anyInside) {
-          VelC.x = -VelC.x;
-          let futrueV = VelC.y + velocity;
-          if (Math.abs(futureX) > GLOBALS.maxBallVelocity) {
-            futrueV = Math.sign(futrueV) * GLOBALS.maxBallVelocity
+          if (!reversed) {
+            entity.addComponent(ReverseComponent);
+            VelC.x = -VelC.x;
           }
-          VelC.y = futrueV
           break;
+        } else {
+          entity.removeComponent(ReverseComponent);
         }
       }
 
