@@ -59,6 +59,7 @@ const ball = world
   .addComponent(VelocityComponent, { x: 2, y: 1 })
   .addComponent(BounceComponent)
 
+console.log('for build', entity1, entity2, ball)
 pixiApp.ticker.add((delta) => {
   world.execute(delta);
 });
