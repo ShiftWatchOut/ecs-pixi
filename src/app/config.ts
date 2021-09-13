@@ -19,6 +19,7 @@ const GLOBALS = {
   },
   ety1Pos: 10, // 有可能把项目竖着重构，不确定是 x 还是 y
   ety2Pos: 710,
+  aiMoveGap: 60,
 };
 
 export default GLOBALS;
