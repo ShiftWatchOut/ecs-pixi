@@ -39,3 +39,7 @@ export function getVertexes(x: number, y: number, w: number, h: number): IPoint[
 export function contains(x: number, y: number, w: number, h: number, px: number, py: number) {
     return between(x, x + w, px) && between(y, y + h, py)
 }
+
+export function numberNear(n1:number, n2: number, e = 10e-7) {
+    return Math.abs(n1 - n2) <= e;
+}

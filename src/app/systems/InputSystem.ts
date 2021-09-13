@@ -1,10 +1,11 @@
-import { System } from "ecsy";
+import { Not, System } from "ecsy";
+import FakeInputComponent from "../components/FakeInput";
 import InputComponent from "../components/Input";
 
 class InputSystem extends System {
   static queries = {
     keyboard: {
-      components: [InputComponent],
+      components: [InputComponent, Not(FakeInputComponent)],
     },
   };
   keys: string[] = [];

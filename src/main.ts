@@ -13,6 +13,8 @@ import SpriteComponent from "./app/components/Sprite";
 import pixiApp from "./app/singletons/pixi";
 import BounceComponent from "./app/components/Bouncing";
 import ScoreSystem from "./app/systems/ScoreSystem";
+import FakeInputComponent from "./app/components/FakeInput";
+import AISystem from "./app/systems/AISystem";
 
 const world = new World();
 
@@ -26,6 +28,8 @@ world
   .registerComponent(SpriteComponent)
   .registerComponent(BounceComponent)
   .registerComponent(ReverseComponent)
+  .registerComponent(FakeInputComponent)
+  .registerSystem(AISystem)
   .registerSystem(InputSystem)
   .registerSystem(VelocitySystem)
   .registerSystem(ScoreSystem)
@@ -47,6 +51,7 @@ const entity2 = world
   .addComponent(PositionComponent, PositionComponent.create(ety2Pos, startY))
   .addComponent(VolumeComponent, VolumeComponent.create(20, 100))
   .addComponent(VelocityComponent)
+  .addComponent(FakeInputComponent)
   .addComponent(
     InputComponent,
     InputComponent.create([interactWith.arrowdown, interactWith.arrowup])
