@@ -1,5 +1,5 @@
-import { TagComponent } from "ecsy";
+import { TagComponent } from 'ecsy';
 
-class FakeInputComponent extends TagComponent { }
+class FakeInputComponent extends TagComponent {}
 
-export default FakeInputComponent
+export default FakeInputComponent;

@@ -10,7 +10,7 @@ import { between, contains, getVertexes, IPoint, ISize } from "../util";
 const { interactWith, boardVelocity } = GLOBALS;
 
 class VelocitySystem extends System {
-  static queries = {
+  public static queries = {
     inputAndVelocity: {
       components: [InputComponent, VelocityComponent],
     },
@@ -21,7 +21,7 @@ class VelocitySystem extends System {
       components: [VolumeComponent, VelocityComponent, Not(BounceComponent)]
     }
   };
-  execute() {
+  public execute() {
     this.queries.inputAndVelocity.results.forEach((entity) => {
       const inputC = entity.getComponent(InputComponent);
       const VelocityC = entity.getMutableComponent(VelocityComponent);
@@ -30,7 +30,7 @@ class VelocitySystem extends System {
       } else if (
         [interactWith.s, interactWith.arrowdown].includes(inputC?.key)
       ) {
-        VelocityC!.y = +boardVelocity;
+        VelocityC!.y = Number(boardVelocity);
       } else {
         VelocityC!.y = 0;
       }

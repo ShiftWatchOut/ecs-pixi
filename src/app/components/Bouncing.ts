@@ -1,5 +1,5 @@
-import { TagComponent } from "ecsy";
+import { TagComponent } from 'ecsy';
 
-class BounceComponent extends TagComponent { }
+class BounceComponent extends TagComponent {}
 
-export default BounceComponent
+export default BounceComponent;

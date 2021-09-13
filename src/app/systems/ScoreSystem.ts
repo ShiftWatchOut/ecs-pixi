@@ -6,13 +6,13 @@ import { between } from "../util";
 
 const { initBallPos, ety1Pos, ety2Pos } = GLOBALS
 class ScoreSystem extends System {
-    static queries = {
+    public static queries = {
         ball: {
             components: [BounceComponent],
         },
     }
-    relativeXs = [ety1Pos, ety2Pos]
-    execute() {
+    private relativeXs = [ety1Pos, ety2Pos]
+    public execute() {
         this.queries.ball.results.forEach((entity) => {
             const PosC = entity.getMutableComponent(PositionComponent)!;
             // 以两边为界，越过即重置球的位置
@@ -23,9 +23,6 @@ class ScoreSystem extends System {
         })
     }
 
-    resetBall() {
-
-    }
 }
 
 export default ScoreSystem

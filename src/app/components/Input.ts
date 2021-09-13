@@ -1,19 +1,19 @@
-import { Component, Types } from "ecsy";
+import { Component, Types } from 'ecsy';
 // ArrowDown
 // ArrowUp
 class InputComponent extends Component<any> {
-  static schema = {
-    key: { type: Types.String },
-    subscribe: { type: Types.Array },
-  };
-  static create(subscribe: string[], key?: string) {
-    return {
-      key,
-      subscribe,
+    public static schema = {
+        key: { type: Types.String },
+        subscribe: { type: Types.Array }
     };
-  }
-  key: any;
-  subscribe: string[] = [];
+    public static create(subscribe: string[], key?: string) {
+        return {
+            key,
+            subscribe
+        };
+    }
+    public key: any;
+    public subscribe: string[] = [];
 }
 
 export default InputComponent;

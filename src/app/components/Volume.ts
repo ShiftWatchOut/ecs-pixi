@@ -1,18 +1,18 @@
-import { Component, Types } from "ecsy";
+import { Component, Types } from 'ecsy';
 
 class VolumeComponent extends Component<any> {
-  static create(width: number, height: number) {
-    return {
-      width,
-      height,
+    public static schema = {
+        width: { type: Types.Number },
+        height: { type: Types.Number }
     };
-  }
-  static schema = {
-    width: { type: Types.Number },
-    height: { type: Types.Number },
-  };
-  width = 0;
-  height = 0;
+    public static create(width: number, height: number) {
+        return {
+            width,
+            height
+        };
+    }
+    public width = 0;
+    public height = 0;
 }
 
 export default VolumeComponent;

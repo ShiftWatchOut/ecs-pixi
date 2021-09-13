@@ -1,18 +1,18 @@
-import { Component, Types } from "ecsy";
+import { Component, Types } from 'ecsy';
 
 class PositionComponent extends Component<any> {
-  static create(x: number, y: number) {
-    return {
-      x,
-      y,
+    public static schema = {
+        x: { type: Types.Number },
+        y: { type: Types.Number }
     };
-  }
-  static schema = {
-    x: { type: Types.Number },
-    y: { type: Types.Number },
-  };
-  x = 0;
-  y = 0;
+    public static create(x: number, y: number) {
+        return {
+            x,
+            y
+        };
+    }
+    public x = 0;
+    public y = 0;
 }
 
 export default PositionComponent;

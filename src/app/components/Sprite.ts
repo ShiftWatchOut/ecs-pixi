@@ -1,15 +1,15 @@
-import { Component, Types } from "ecsy";
+import { Component, Types } from 'ecsy';
 
 class SpriteComponent extends Component<any> {
-  static create(ref: any) {
-    return {
-      ref,
+    public static schema = {
+        ref: { type: Types.Ref }
     };
-  }
-  static schema = {
-    ref: { type: Types.Ref },
-  };
-  ref: any;
+    public static create(ref: any) {
+        return {
+            ref
+        };
+    }
+    public ref: any;
 }
 
 export default SpriteComponent;
